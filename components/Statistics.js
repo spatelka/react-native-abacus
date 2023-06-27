@@ -17,7 +17,7 @@ function Statistics({ stats }) {
   return (
     <View style={styles.statsContainer}>
       <View style={styles.statsItem}>
-        <Icon icon={"calculator-outline"} size={24} color={Colors.accent500} />
+        <Icon icon={"calculator-outline"} size={24} color={Colors.accent100} />
         <Text style={GlobalStyles.subtitle}>
           {stats.completed}/{stats.total} ({completedPerc}%)
         </Text>

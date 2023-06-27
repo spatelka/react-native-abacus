@@ -49,8 +49,7 @@ function getDivisionEquation(resultLimit) {
 }
 
 export function getEquationSet(equationParams) {
-  const { equationNumber, resultLimit, mathOperations } = equationParams;
-  const onlyResult = true;
+  const { equationNumber, resultLimit, mathOperations, resultOnly } = equationParams;
   const mathOperationsNumber = mathOperations.length;
   let equationSet = [];
   for (let i = 0; i < equationNumber; i++) {
@@ -76,7 +75,7 @@ export function getEquationSet(equationParams) {
       key: i,
       ...equation,
       answer: null,
-      guessNumber: onlyResult ? 0 : Math.floor(Math.random() * 3),
+      guessNumber: resultOnly ? 0 : Math.floor(Math.random() * 3),
       isCorrect: false,
     });
   }

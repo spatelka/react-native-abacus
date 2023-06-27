@@ -3,7 +3,6 @@ import { createContext, useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export const SettingsContext = createContext({
-  reset: () => {},
   resultLimit: 0,
   setResultLimit: (id) => {},
   equationNumber: 0,
@@ -13,6 +12,12 @@ export const SettingsContext = createContext({
   setMathOperation: (id) => {},
   testPassingCriteria: 0,
   setTestPassingCriteria: (id) => {},
+  resultOnly: true,
+  setResultOnly: (value) => {},
+  historyList: [],
+  addHistory: (history) => {},
+  cleanHistoryList: () => {},
+  getHistoryList: () => {},
 });
 
 function SettingsContextProvider({ children }) {
@@ -20,10 +25,9 @@ function SettingsContextProvider({ children }) {
   const [number, setNumber] = useState(0);
   const [operations, setOperations] = useState([false, false, false, false]);
   const [testCriteria, setTestCriteria] = useState(0);
+  const [resultOnlyParam, setResultOnlyParam] = useState(true);
+  const [history, setHistory] = useState([]);
 
-  function reset() {
-    console.log("reset");
-  }
   function setResultLimit(id) {
     AsyncStorage.setItem("resultLimit", id.toString());
     setLimit(id);
@@ -48,10 +52,37 @@ function SettingsContextProvider({ children }) {
   function setTestPassingCriteria(id) {
     AsyncStorage.setItem("testPassingCriteria", id.toString());
     setTestCriteria(id);
-  }  
+  }
+
+  function setResultOnly(value) {
+    setResultOnlyParam(value);
+    AsyncStorage.setItem("resultOnly", value.toString());
+  }
+
+  function cleanHistoryList() {
+    AsyncStorage.removeItem("history");
+  }
+
+  async function getHistoryList() {
+    const storedHistory = await AsyncStorage.getItem("history");
+    let list = [];
+    if (storedHistory) {
+      list = JSON.parse(storedHistory);
+    }
+    setHistory(list);
+  }
+
+  async function addHistory(history) {
+    const storedHistory = await AsyncStorage.getItem("history");
+    let historyList = [];
+    if (storedHistory) {
+      historyList = JSON.parse(storedHistory);
+    }
+    historyList.push(history);  
+    AsyncStorage.setItem("history", JSON.stringify(historyList));
+  }
 
   const value = {
-    reset: reset,
     resultLimit: limit, // wartosc zakresu dzialan
     setResultLimit: setResultLimit, // ustaw zakres dzialan
     equationNumber: number, // wartosc liczby zadan
@@ -61,6 +92,12 @@ function SettingsContextProvider({ children }) {
     setMathOperation: setMathOperation, // ustawienie aktywnosci wybranej operacji matematycznej
     testPassingCriteria: testCriteria, // kryterium zdania testu
     setTestPassingCriteria: setTestPassingCriteria, // ustawienie kryterium zdania testu
+    resultOnly: resultOnlyParam, // czy wyliczany tylko wynik (jesli nie, to wyliczane beda rowniez argumenty)
+    setResultOnly: setResultOnly, // ustawienie czy wyliczany tylko wynik (jesli nie, to wyliczane beda rowniez argumenty)
+    historyList: history,   // historia
+    cleanHistoryList: cleanHistoryList, // wyczysc historie
+    getHistoryList: getHistoryList, // pobierz historie
+    addHistory: addHistory, // dodaj wpis do historii
   };
 
   return (

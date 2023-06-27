@@ -1,6 +1,6 @@
 import { useState, useEffect, useContext } from "react";
 
-import { View, Text, StyleSheet } from "react-native";
+import { ScrollView, View, Text, StyleSheet } from "react-native";
 
 import { SettingsContext } from "../store/settings-context";
 import GlobalStyles from "../styles/styles";
@@ -33,6 +33,7 @@ function EquationScreen({
       equationNumber: equationNumberList[settingsCtx.equationNumber].value,
       resultLimit: resultLimitRangeList[settingsCtx.resultLimit].value,
       mathOperations: mathOps,
+      resultOnly: settingsCtx.resultOnly
     };
   }
 
@@ -113,62 +114,74 @@ function EquationScreen({
   const isTestCompleted = stats.completed === stats.total;
 
   return (
-    <View style={styles.rootContainer}>
-      <ModalWindow
-        isVisible={isModalVisible}
-        type={"yesno"}
-        onClose={onModalWindowCloseHandler}
-      >
-        <Text style={GlobalStyles.modalText}>
-          Czy na pewno chcesz przerwać test?
+    <ScrollView>
+      <View style={styles.rootContainer}>
+        <ModalWindow
+          isVisible={isModalVisible}
+          type={"yesno"}
+          onClose={onModalWindowCloseHandler}
+        >
+          <Text style={GlobalStyles.modalText}>
+            Czy na pewno chcesz przerwać test?
+          </Text>
+        </ModalWindow>
+
+        <Text style={GlobalStyles.label}>Test</Text>
+        <Text style={GlobalStyles.subtitle}>
+          Zadanie: {currEquation + 1} / {equations.length}
         </Text>
-      </ModalWindow>
 
-      <Text style={GlobalStyles.label}>Test</Text>
-      <Text style={GlobalStyles.subtitle}>
-        Zadanie: {currEquation + 1} / {equations.length}
-      </Text>
+        <Statistics stats={stats} />
 
-      <Statistics stats={stats} />
-
-      {equations.length > 0 && <Equation equation={equations[currEquation]} />}
-
-      <View style={styles.answerContainer}>
-        {isValueSubmitted ? (
-          <Evaluation equation={equations[currEquation]} />
-        ) : (
-          <Input
-            label="Wprowadź wynik:"
-            invalid={false}
-            value={value}
-            onChangeText={inputChangeHandler}
-            onSubmitEditing={inputSubmitHandler}
-          />
+        {equations.length > 0 && (
+          <Equation equation={equations[currEquation]} />
         )}
-      </View>
 
-      <View style={styles.buttonContainer}>
-        <PrimaryButton width={140} onPress={onPrevEquationButtonHandler}>
-          Poprzedni
-        </PrimaryButton>
+        <View style={styles.answerContainer}>
+          {isValueSubmitted ? (
+            <Evaluation equation={equations[currEquation]} />
+          ) : (
+            <Input
+              label="Wprowadź wynik:"
+              invalid={false}
+              value={value}
+              onChangeText={inputChangeHandler}
+              onSubmitEditing={inputSubmitHandler}
+            />
+          )}
+        </View>
 
-        <PrimaryButton width={140} onPress={onNextEquationButtonHandler}>
-          Następny
-        </PrimaryButton>
-      </View>
-      <View>
-        {!isTestCompleted && (
-          <PrimaryButton width={150} onPress={onPressCancelButtonHandler}>
-            Anuluj test
+        <View style={styles.buttonContainer}>
+          <PrimaryButton
+            width={140}
+            disabled={currEquation === 0}
+            onPress={onPrevEquationButtonHandler}
+          >
+            Poprzedni
           </PrimaryButton>
-        )}
-        {isTestCompleted && (
-          <PrimaryButton width={150} onPress={onPressFinishButtonHandler}>
-            Zakończ
+
+          <PrimaryButton
+            width={140}
+            disabled={currEquation === equations.length - 1}
+            onPress={onNextEquationButtonHandler}
+          >
+            Następny
           </PrimaryButton>
-        )}
+        </View>
+        <View>
+          {!isTestCompleted && (
+            <PrimaryButton width={150} onPress={onPressCancelButtonHandler}>
+              Anuluj test
+            </PrimaryButton>
+          )}
+          {isTestCompleted && (
+            <PrimaryButton width={150} onPress={onPressFinishButtonHandler}>
+              Zakończ
+            </PrimaryButton>
+          )}
+        </View>
       </View>
-    </View>
+    </ScrollView>
   );
 }
 
@@ -181,9 +194,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   answerContainer: {
-    // flex: 1,
-    // marginTop: 100,
-    // alignItems: "center",
     height: 100,
   },
   buttonContainer: {

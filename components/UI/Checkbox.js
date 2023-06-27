@@ -1,18 +1,19 @@
 import { View, StyleSheet } from "react-native";
 import BouncyCheckbox from "react-native-bouncy-checkbox";
+import Colors from "../../styles/colors";
 
 function Checkbox({ label, isChecked, onChange }) {
   return (
     <View style={styles.checkbox}>
       <BouncyCheckbox
         size={24}
-        fillColor="blue"
-        unfillColor="#FFFFFF"
+        fillColor={Colors.primary500}
+        unfillColor={Colors.accent100}
         text={label}
         iconStyle={{ borderColor: "blue" }}
         innerIconStyle={{ borderWidth: 2 }}
         isChecked={isChecked}
-        textStyle={{ textDecorationLine: "none" }}
+        textStyle={{ textDecorationLine: "none", color: "black" }}
         onPress={() => {
           onChange(!isChecked);
         }}
@@ -27,6 +28,5 @@ const styles = StyleSheet.create({
   checkbox: {
     marginHorizontal: 12,
     marginVertical: 4,
-    // alignItems: "flex-start",
   },
 });

@@ -2,7 +2,6 @@ import { View, Text, StyleSheet } from "react-native";
 
 import GlobalStyles from "../styles/styles";
 import Colors from "../styles/colors";
-import Icon from "./UI/Icon";
 
 function Evaluation({ equation }) {
   const backgroundColor = equation.isCorrect
@@ -21,12 +20,6 @@ function Evaluation({ equation }) {
         >
           <Text style={styles.answer}>{equation.answer}</Text>
         </View>
-        {/* <Icon
-          icon={equation.isCorrect ? "happy-outline" : "sad-outline"}
-          size={32}
-          backgroundColor={equation.isCorrect ? Colors.correct : Colors.incorrect}
-          color={"white"}
-        /> */}
       </View>
     </View>
   );
@@ -40,7 +33,6 @@ const styles = StyleSheet.create({
     margin: 8,
     justifyContent: "space-between",
     alignItems: "center",
-    // alignContent: "center",
     height: 60,
   },
   answerContainer: {
@@ -49,12 +41,11 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     justifyContent: "center",
     alignItems: "center",
-    // backgroundColor: "#535322",
     width: 80,
   },
   answer: {
     fontWeight: "bold",
     fontSize: 24,
-    color: "white",
+    color: Colors.accent100,
   },
 });

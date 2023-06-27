@@ -35,11 +35,11 @@ const styles = StyleSheet.create({
   },
   label: {
     fontSize: 18,
-    color: Colors.accent500,
+    color: Colors.accent100,
     marginBottom: 4,
   },
   input: {
-    backgroundColor: Colors.accent500,
+    backgroundColor: Colors.accent100,
     color: Colors.primary500,
     padding: 6,
     borderRadius: 6,

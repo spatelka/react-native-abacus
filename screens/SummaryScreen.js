@@ -8,7 +8,7 @@ import Card from "../components/UI/Card";
 import Colors from "../styles/colors";
 import { dateToString, durationToString } from "../utils/date";
 import { testPassingCriteriaList } from "../data/dictionaries";
-import { sendEmail } from '../utils/communication';
+import { sendEmail } from "../utils/communication";
 
 function SummaryScreen({ stats, onViewChange }) {
   const settingsCtx = useContext(SettingsContext);
@@ -27,6 +27,7 @@ function SummaryScreen({ stats, onViewChange }) {
     //   console.log("Your message was successfully sent!");
     // });
     onViewChange(0);
+    settingsCtx.addHistory(stats);
   }
 
   return (
@@ -36,19 +37,28 @@ function SummaryScreen({ stats, onViewChange }) {
         <View style={styles.statsContainer}>
           <View style={styles.statsItem}>
             <Text>Zadań:</Text>
-            <Text>{stats.total}</Text>
+            <Text style={{ fontWeight: "bold" }}>{stats.total}</Text>
           </View>
           <View style={styles.statsItem}>
             <Text>Poprawnych:</Text>
-            <Text style={{ color: Colors.correct }}>{stats.correct}</Text>
+            <Text style={{ fontWeight: "bold", color: Colors.correct }}>
+              {stats.correct}
+            </Text>
           </View>
           <View style={styles.statsItem}>
             <Text>Błędnych:</Text>
-            <Text style={{ color: Colors.incorrect }}>{stats.incorrect}</Text>
+            <Text style={{ fontWeight: "bold", color: Colors.incorrect }}>
+              {stats.incorrect}
+            </Text>
           </View>
           <View style={styles.statsItem}>
             <Text>Wynik testu:</Text>
-            <Text>
+            <Text
+              style={{
+                fontWeight: "bold",
+                color: isPassed ? Colors.correct : Colors.incorrect,
+              }}
+            >
               {stats.testResult * 100}%{" "}
               {isPassed ? "zaliczony" : "nie zaliczony"}{" "}
             </Text>

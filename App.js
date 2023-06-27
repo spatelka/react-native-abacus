@@ -1,9 +1,9 @@
 import { useState, useEffect, useContext } from "react";
 
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, SafeAreaView } from "react-native";
+import { StyleSheet } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-// import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
+import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 
 import SettingsContextProvider, {
   SettingsContext,
@@ -12,6 +12,8 @@ import SettingsContextProvider, {
 import StartScreen from "./screens/StartScreen";
 import EquationScreen from "./screens/EquationScreen";
 import SummaryScreen from "./screens/SummaryScreen";
+import HistoryScreen from "./screens/HistoryScreen";
+
 import Colors from "./styles/colors";
 import { getCurrentDate } from "./utils/date";
 
@@ -95,10 +97,12 @@ export default function App() {
         if (storedTestPassingCriteria)
           settingsCtx.setTestPassingCriteria(
             parseInt(storedTestPassingCriteria)
-          );          
-        // AsyncStorage.removeItem("resultLimit");
-        // AsyncStorage.removeItem("equationNumber");
-        // AsyncStorage.removeItem("mathOperations");
+          );
+
+        const storedResultOnly = await AsyncStorage.getItem("resultOnly");
+        if (storedResultOnly)
+          settingsCtx.setResultOnly(storedResultOnly === "true");
+
         setIsInitiating(false);
       }
 
@@ -111,7 +115,7 @@ export default function App() {
       return <></>;
     }
 
-    let screen = <StartScreen onViewChange={startTestHandle} />;
+    let screen = <StartScreen onViewChange={setView} />;
     if (view === 1) {
       screen = (
         <EquationScreen
@@ -126,12 +130,15 @@ export default function App() {
     if (view === 2) {
       screen = <SummaryScreen onViewChange={setView} stats={stats} />;
     }
-
-    function startTestHandle() {
-      setView(1);
+    if (view === 9) {
+      screen = <HistoryScreen onViewChange={setView} stats={stats} />;
     }
 
-    console.log("stats", stats);
+    // function startTestHandle() {
+    //   setView(1);
+    // }
+
+    // console.log("stats", stats);
 
     return screen;
   }

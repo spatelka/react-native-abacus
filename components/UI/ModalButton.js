@@ -21,7 +21,7 @@ const styles = StyleSheet.create({
     elevation: 2,
   },
   textStyle: {
-    color: "white",
+    color: Colors.accent100,
     fontWeight: "bold",
     textAlign: "center",
   },

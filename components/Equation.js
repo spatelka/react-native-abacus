@@ -24,27 +24,22 @@ function Equation({ equation }) {
     );
   }
 
-  // console.log("equation", equation);
   return (
     <View style={styles.equationContainer}>
       <Text
         style={
-          equation.guessNumber === 1
-            ? styles.argumentEmptyContainer
-            : styles.argumentContainer
+          equation.guessNumber === 1 ? emptyStyle : styles.argumentContainer
         }
       >
-        {equation.guessNumber === 1 && !equation.answer ? "" : equation.arg1}
+        {equation.guessNumber === 1 && !equation.answer ? "?" : equation.arg1}
       </Text>
       <Text style={styles.operationContainer}>{operation}</Text>
       <Text
         style={
-          equation.guessNumber === 2
-            ? styles.argumentEmptyContainer
-            : styles.argumentContainer
+          equation.guessNumber === 2 ? emptyStyle : styles.argumentContainer
         }
       >
-        {equation.guessNumber === 2 && !equation.answer ? "" : equation.arg2}
+        {equation.guessNumber === 2 && !equation.answer ? "?" : equation.arg2}
       </Text>
       <Text style={styles.operationContainer}>=</Text>
       <Text
@@ -66,7 +61,6 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
     marginTop: 20,
-    // marginBottom: 10,
     padding: 12,
   },
   argumentContainer: {

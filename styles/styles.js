@@ -16,7 +16,7 @@ const GlobalStyles = StyleSheet.create({
     margin: 12,
     fontWeight: "bold",
     fontSize: 16,
-    color: Colors.accent500,
+    color: Colors.accent100,
   },
   modalText: {
     margin: 12,
@@ -38,7 +38,7 @@ const GlobalStyles = StyleSheet.create({
     color: Colors.primary500,
   },
   equationElementEmpty: {
-    backgroundColor: "white",
+    backgroundColor: Colors.accent100,
   },
   equationArgument: {
     width: 60,
@@ -48,18 +48,18 @@ const GlobalStyles = StyleSheet.create({
   },
   equationElementCorrect: {
     backgroundColor: Colors.correct,
-    color: "white",
+    color: Colors.accent100,
   },
   equationElementIncorrect: {
     backgroundColor: Colors.incorrect,
-    color: "white",
+    color: Colors.accent100,
   },
   cardSettings: {
     borderRadius: 10,
     marginHorizontal: 12,
     marginVertical: 12,
     padding: 8,
-    backgroundColor: "white",
+    backgroundColor: Colors.background,
   },
 });
 
