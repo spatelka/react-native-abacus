@@ -56,8 +56,8 @@ const GlobalStyles = StyleSheet.create({
   },
   cardSettings: {
     borderRadius: 10,
-    marginHorizontal: 12,
-    marginVertical: 12,
+    marginHorizontal: 4,
+    marginVertical: 2,
     padding: 8,
     backgroundColor: Colors.background,
   },

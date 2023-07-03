@@ -20,6 +20,7 @@ function EquationScreen({
   onInitStats,
   onUpdateStats,
   onUpdateStatsItem,
+  onUpdateEquations,
 }) {
   const settingsCtx = useContext(SettingsContext);
 
@@ -33,7 +34,7 @@ function EquationScreen({
       equationNumber: equationNumberList[settingsCtx.equationNumber].value,
       resultLimit: resultLimitRangeList[settingsCtx.resultLimit].value,
       mathOperations: mathOps,
-      resultOnly: settingsCtx.resultOnly
+      resultOnly: settingsCtx.resultOnly,
     };
   }
 
@@ -64,11 +65,13 @@ function EquationScreen({
   function onPressCancelButtonHandler() {
     setIsModalVisible(true);
   }
+
   function onPressFinishButtonHandler() {
-    onViewChange(2);
+    onUpdateEquations(equations);
     const endDate = getCurrentDate();
     onUpdateStatsItem("endDate", endDate);
     onUpdateStatsItem("duration", setDuration(stats.startDate, endDate));
+    onViewChange(2);
   }
 
   function onPrevEquationButtonHandler() {

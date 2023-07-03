@@ -1,6 +1,6 @@
 export const equationNumberList = [
-    {key: 0, value: 2},
-    {key: 1, value: 5},
+    {key: 0, value: 5},
+    {key: 1, value: 10},
     {key: 2, value: 20},
     {key: 3, value: 30},
     {key: 4, value: 50}

@@ -32,6 +32,7 @@ export default function App() {
       endDate: null,
       duration: null,
     });
+    const [equations, setEquations] = useState([]);
 
     function initStats(total) {
       setStats({
@@ -71,6 +72,10 @@ export default function App() {
           [name]: value,
         };
       });
+    }
+
+    function updateEquations(equationList) {
+      setEquations(equationList);
     }
 
     useEffect(() => {
@@ -124,21 +129,22 @@ export default function App() {
           onInitStats={initStats}
           onUpdateStats={(isCorrect) => updateStats(isCorrect)}
           onUpdateStatsItem={updateStatsItem}
+          onUpdateEquations={updateEquations}
         />
       );
     }
     if (view === 2) {
-      screen = <SummaryScreen onViewChange={setView} stats={stats} />;
+      screen = (
+        <SummaryScreen
+          stats={stats}
+          equations={equations}
+          onViewChange={setView}
+        />
+      );
     }
     if (view === 9) {
       screen = <HistoryScreen onViewChange={setView} stats={stats} />;
     }
-
-    // function startTestHandle() {
-    //   setView(1);
-    // }
-
-    // console.log("stats", stats);
 
     return screen;
   }

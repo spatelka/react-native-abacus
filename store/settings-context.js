@@ -2,6 +2,22 @@ import { createContext, useState } from "react";
 
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
+import { dateToString } from "../utils/date";
+
+const setOutputHistoryList = (inputHistoryList) => {
+  const list = inputHistoryList.map((history, index) => ({
+    id: index,
+    stats: {
+      ...history.stats,
+      startDate: new Date(history.stats.startDate),
+      isPassed: null,
+    },
+    equations: history.equations
+  }));
+  list.reverse();
+  return list;
+};
+
 export const SettingsContext = createContext({
   resultLimit: 0,
   setResultLimit: (id) => {},
@@ -69,7 +85,7 @@ function SettingsContextProvider({ children }) {
     if (storedHistory) {
       list = JSON.parse(storedHistory);
     }
-    setHistory(list);
+    setHistory(setOutputHistoryList(list));
   }
 
   async function addHistory(history) {
@@ -78,7 +94,7 @@ function SettingsContextProvider({ children }) {
     if (storedHistory) {
       historyList = JSON.parse(storedHistory);
     }
-    historyList.push(history);  
+    historyList.push(history);
     AsyncStorage.setItem("history", JSON.stringify(historyList));
   }
 
@@ -94,7 +110,7 @@ function SettingsContextProvider({ children }) {
     setTestPassingCriteria: setTestPassingCriteria, // ustawienie kryterium zdania testu
     resultOnly: resultOnlyParam, // czy wyliczany tylko wynik (jesli nie, to wyliczane beda rowniez argumenty)
     setResultOnly: setResultOnly, // ustawienie czy wyliczany tylko wynik (jesli nie, to wyliczane beda rowniez argumenty)
-    historyList: history,   // historia
+    historyList: history, // historia
     cleanHistoryList: cleanHistoryList, // wyczysc historie
     getHistoryList: getHistoryList, // pobierz historie
     addHistory: addHistory, // dodaj wpis do historii

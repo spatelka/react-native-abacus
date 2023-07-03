@@ -10,7 +10,7 @@ function CheckboxList({ dataSet, isCheckedSet, onUpdate }) {
   }
 
   return (
-    <Card width={200}>
+    <Card width={250}>
       <View>
         {dataSet.map((item, index) => (
           <View key={index}>

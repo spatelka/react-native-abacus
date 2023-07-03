@@ -1,4 +1,4 @@
-import { Pressable, View, Text, StyleSheet } from "react-native";
+import { Pressable, View, ScrollView, Text, StyleSheet } from "react-native";
 import Modal from "react-native-modal";
 import { GlobalStyles } from "../../styles/styles";
 import Colors from "../../styles/colors";

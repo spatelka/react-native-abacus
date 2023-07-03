@@ -54,14 +54,14 @@ function StartScreen({ onViewChange }) {
 
       <View style={styles.rootContainer}>
         <Select
-          width={150}
+          width={250}
           label="Zakres działań"
           dictionary={resultLimitRangeList}
           init={settingsCtx.resultLimit}
           onSelect={onSelectResultLimitHandle}
         />
         <Select
-          width={150}
+          width={250}
           label="Liczba zadań"
           dictionary={equationNumberList}
           init={settingsCtx.equationNumber}
@@ -78,7 +78,7 @@ function StartScreen({ onViewChange }) {
           onUpdate={settingsCtx.setResultOnly}
         />
         <Select
-          width={200}
+          width={250}
           label="Kryterium zaliczenia [%]"
           dictionary={testPassingCriteriaList}
           init={settingsCtx.testPassingCriteria}

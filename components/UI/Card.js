@@ -11,7 +11,7 @@ export default Card;
 const styles = StyleSheet.create({
   container: {
     justifyContent: "space-between",
-    alignItems: "center",
+    // alignItems: "center",
     backgroundColor: GlobalStyles.cardSettings.backgroundColor,
     borderRadius: GlobalStyles.cardSettings.borderRadius,
     marginVertical: GlobalStyles.cardSettings.marginVertical,
