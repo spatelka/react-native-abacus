@@ -89,6 +89,9 @@ function StartScreen({ onViewChange }) {
             Rozpocznij
           </PrimaryButton>
         )}
+        <View>
+          <Text style={styles.footer}>© Sławek Patelka, 07'2023</Text>
+        </View>
       </View>
     </ScrollView>
   );
@@ -109,6 +112,10 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   headerItem: {
-    justifyContent: "center"
+    justifyContent: "center",
+  },
+  footer: {
+    marginTop: 10,
+    color: Colors.accent100
   }
 });

@@ -7,15 +7,18 @@ import PrimaryButton from "../UI/PrimaryButton";
 import ModalWindow from "../UI/ModalWindow";
 
 import HistoryItem from "./HistoryItem";
+import HistoryLevel from "./HistoryLevel";
 
 function HistoryList({
   historyList,
   testCriteria,
+  learningLevel,
   onBack,
   onHistoryRemoved,
   onItemSelect,
 }) {
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const [isLevelModalVisible, setIsLevelModalVisible] = useState(false);
 
   function renderHistoryItem(itemData) {
     function pressHandler() {
@@ -38,6 +41,10 @@ function HistoryList({
     }
   }
 
+  function onLevelModalWindowCloseHandler() {
+    setIsLevelModalVisible(false);
+  }
+
   return (
     <>
       <ModalWindow
@@ -50,12 +57,26 @@ function HistoryList({
         </Text>
       </ModalWindow>
 
+      <ModalWindow
+        isVisible={isLevelModalVisible}
+        type={"ok"}
+        onClose={onLevelModalWindowCloseHandler}
+      >
+        <HistoryLevel learningLevel={learningLevel} />
+      </ModalWindow>
+
       <Text style={GlobalStyles.label}>Historia</Text>
       <View style={styles.buttonContainer}>
         <PrimaryButton width={100} onPress={onBack}>
           Wróć
         </PrimaryButton>
-        <Text style={GlobalStyles.subtitle}>Wpisów: {historyList.length}</Text>
+        <PrimaryButton
+          width={100}
+          disabled={historyList.length === 0}
+          onPress={() => setIsLevelModalVisible(true)}
+        >
+          Poziom nauki
+        </PrimaryButton>
         <PrimaryButton
           width={100}
           disabled={historyList.length === 0}
@@ -64,6 +85,7 @@ function HistoryList({
           Usuń historię
         </PrimaryButton>
       </View>
+      <Text style={GlobalStyles.subtitle}>Wpisów: {historyList.length}</Text>
       <FlatList
         data={historyList}
         keyExtractor={(item) => item.id}
