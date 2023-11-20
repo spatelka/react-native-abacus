@@ -1,7 +1,10 @@
 function getAdditionEquation(resultLimit) {
-  const result = Math.floor(Math.random() * resultLimit);
-  const arg1 = Math.floor(Math.random() * result);
-  const arg2 = result - arg1;
+  let result, arg1, arg2;
+  do {
+    result = 1 + Math.floor(Math.random() * (resultLimit - 1));
+    arg1 = 1 + Math.floor(Math.random() * (result - 1));
+    arg2 = result - arg1;
+  } while (result === 0 || arg1 === 0 || arg2 === 0);
 
   return {
     type: 0,
@@ -24,10 +27,12 @@ function getSubtractionEquation(resultLimit) {
 
 function getMultiplicationEquation(resultLimit) {
   const factor = Math.sqrt(resultLimit);
-  // const result = Math.floor(Math.random() * resultLimit);
-  const arg1 = Math.floor(Math.random() * factor + 1) + 1;
-  const arg2 = Math.floor(Math.random() * Math.floor(resultLimit / arg1));
-  const result = arg1 * arg2;
+  let result, arg1, arg2;
+  do {
+    arg1 = Math.floor(Math.random() * factor + 1) + 1;
+    arg2 = Math.floor(Math.random() * Math.floor(resultLimit / arg1));
+    result = arg1 * arg2;
+  } while (result === 0 || arg1 === 0 || arg2 === 0);
 
   return {
     type: 2,
@@ -49,7 +54,8 @@ function getDivisionEquation(resultLimit) {
 }
 
 export function getEquationSet(equationParams) {
-  const { equationNumber, resultLimit, mathOperations, resultOnly } = equationParams;
+  const { equationNumber, resultLimit, mathOperations, resultOnly } =
+    equationParams;
   const mathOperationsNumber = mathOperations.length;
   let equationSet = [];
   for (let i = 0; i < equationNumber; i++) {
